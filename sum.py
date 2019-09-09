@@ -1,6 +1,8 @@
 import os
+import signal
 import random
 import threading
+import multiprocessing
 
 def random_matrix(rows, cols):
     matrix = []
@@ -17,8 +19,9 @@ def sum_proc(row_a, row_b, results):
         aux = [] # list que guarda a soma dos elementos
         for a,b in zip(row_a, row_b):
             aux.append(a + b)
-
-        results.append(aux)  
+        results.append(aux)
+    else:
+        os.wait() # espera finalizar a execução dos filhos
 
 def sum_thre(i, j, a, b, results):
     threading.currentThread() # executa a soma na thread atual
@@ -47,11 +50,13 @@ def unroll(args, func, method, results):
                 
         print_matrix(results)
     
-    else: 
+    else:
         for arg, rand in zip(args, random_m):
-            func(arg, rand, results)            
-
-        print_matrix(results)
+            func(arg, rand, results)
+        
+        if len(results) == len(args):
+            print_matrix(results)
+        
 
 if __name__ == '__main__':
     res = []

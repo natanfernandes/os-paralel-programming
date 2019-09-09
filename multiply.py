@@ -17,8 +17,9 @@ def process_multiply(row_a, row_b, results):
         aux = []
         for a, b in zip(row_a, row_b):
             aux.append(a + b)
-
-        results.append(aux)  
+        results.append(aux) 
+    else:
+        os.wait()
 
 def thre_multiply(i, j, a, b, results):
     threading.currentThread()
@@ -56,13 +57,11 @@ def unroll(args, func, method, results):
         print_matrix(results)
     
     else: 
-        processos = []
-
         for arg, row_aleatoria in zip(args, random_m):
-            processos.append([])
             func(arg, row_aleatoria, results)            
 
-        print_matrix(results)
+        if len(results) == len(args):
+            print_matrix(results)
 
 if __name__ == '__main__':
     res = []
